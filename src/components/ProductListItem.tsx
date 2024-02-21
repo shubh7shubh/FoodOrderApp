@@ -16,10 +16,11 @@ type ProductListItemProps = {
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
     const segments = useSegments();
+    // console.log(segments, "dshfhjkf")
     // if (product) console.log(product, "dshfhjkf")
     // View doesnt have the onPress event so need to use Pressable
     return (
-        <Link href={`/menu/${product.id}`} asChild>
+        <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
             <Pressable style={styles.container} >
                 {/* <Pressable style={styles.container} > */}
                 <Image

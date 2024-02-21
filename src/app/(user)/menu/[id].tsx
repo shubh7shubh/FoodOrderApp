@@ -5,12 +5,14 @@ import { defaultPizzaImage } from "@/components/ProductListItem";
 import { PizzaSize } from "@/types";
 import { useState } from "react";
 import Button from "@components/Button"
+import { useCart } from "@/providers/CartProvider";
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 
 const ProductDetailsScreen = () => {
     const { id } = useLocalSearchParams();
+    const { addItem } = useCart();
     const router = useRouter();
     const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
 
@@ -21,11 +23,11 @@ const ProductDetailsScreen = () => {
     }
 
     const addToCart = () => {
-        // if (!product) {
-        //     return;
-        // }
-        // addItem(product, selectedSize);
-        // router.push('/cart');
+        if (!product) {
+            return;
+        }
+        addItem(product, selectedSize);
+        router.push('/cart');
     };
 
     return (
@@ -63,7 +65,7 @@ const ProductDetailsScreen = () => {
                 ))}
             </View>
 
-            <Text style={styles.price}>${product.price}</Text>
+            {/* <Text style={styles.price}>${product.price}</Text> */}
             <Button onPress={addToCart} text="Add to cart" />
         </View>
 
