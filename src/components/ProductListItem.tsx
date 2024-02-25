@@ -7,12 +7,12 @@ import { Product, Tables } from '../types';
 export const defaultPizzaImage =
     'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
 
-type ProductListItemProps = {
-    product: Product;
-};
 // type ProductListItemProps = {
-//   product: Tables<'products'>;
+//     product: Product;
 // };
+type ProductListItemProps = {
+    product: Tables<'products'>;
+};
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
     const segments = useSegments();

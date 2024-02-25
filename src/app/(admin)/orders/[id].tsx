@@ -1,11 +1,12 @@
 // import { useOrderDetails } from '@/api/orders';
 // import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
 // import OrderItemListItem from '@/components/OrderItemListItem';
+import { useOrderDetails, useUpdateOrder } from '@/api/orders';
 import OrderItemListItem from '@/components/OrderItemListItem';
 import OrderListItem from '@/components/OrderListItem';
 import Colors from '@/constants/Colors';
 import { OrderStatusList } from '@/types';
-import orders from '@assets/data/orders';
+// import orders from '@assets/data/orders';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, FlatList, Pressable, Text, View } from 'react-native';
 
@@ -13,31 +14,36 @@ export default function OrderDetailsScreen() {
     const { id: idString } = useLocalSearchParams();
     const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
-    const order = orders.find(o => o.id.toString() === id.toString());
+    // const order = orders.find(o => o.id.toString() === id.toString());
 
-    if (!order) {
-        return <Text>Not found</Text>
-    }
 
-    //   const { data: order, isLoading, error } = useOrderDetails(id);
+    const { data: order, isLoading, error } = useOrderDetails(id);
+    const { mutate: updateOrder } = useUpdateOrder();
+
     //   useUpdateOrderSubscription(id);
 
-    //   if (isLoading) {
-    //     return <ActivityIndicator />;
-    //   }
-    //   if (error) {
-    //     return <Text>Failed to fetch</Text>;
-    //   }
-
     const updateStatus = async (status: string) => {
-        // await updateOrder({
-        //   id: id,
-        //   updatedFields: { status },
-        // });
+        updateOrder({
+            id: id,
+            updatedFields: { status },
+        });
         // if (order) {
         //   await notifyUserAboutOrderUpdate({ ...order, status });
         // }
     };
+
+
+    if (isLoading) {
+        return <ActivityIndicator />;
+    }
+
+
+    if (error || !order) {
+        return <Text>Failed to fetch</Text>;
+    }
+
+
+    // console.log(order?.order_items);
 
 
     return (

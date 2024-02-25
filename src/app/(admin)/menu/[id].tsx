@@ -1,6 +1,6 @@
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import products from "@assets/data/products";
+// import products from "@assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import { PizzaSize } from "@/types";
 import { useState } from "react";
@@ -8,29 +8,44 @@ import Button from "@components/Button"
 import { useCart } from "@/providers/CartProvider";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
+import { useProduct } from "@/api/products";
+import { ActivityIndicator } from "react-native";
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 
 const ProductDetailsScreen = () => {
-    const { id } = useLocalSearchParams();
-    const { addItem } = useCart();
-    const router = useRouter();
-    const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
+    const { id: idString } = useLocalSearchParams();
 
-    const product = products.find(p => p.id.toString() === id);
+    const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
+
+    const { data: product, error, isLoading } = useProduct(id);
+
+    // const { addItem } = useCart();
+    const router = useRouter();
+    // const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
+
+    // const product = products.find(p => p.id.toString() === id);
 
     if (!product) {
         return <Text>Product not found</Text>
     }
 
-    const addToCart = () => {
-        if (!product) {
-            return;
-        }
-        addItem(product, selectedSize);
-        router.push('/cart');
-    };
+    if (isLoading) {
+        return <ActivityIndicator />;
+    }
+
+    if (error) {
+        return <Text>Failed to fetch products</Text>;
+    }
+
+    // const addToCart = () => {
+    //     if (!product) {
+    //         return;
+    //     }
+    //     addItem(product, selectedSize);
+    //     router.push('/cart');
+    // };
 
     return (
         <View style={styles.container}>
