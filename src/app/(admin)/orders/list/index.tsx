@@ -12,6 +12,9 @@ export default function OrdersScreen() {
         error,
     } = useAdminOrderList({ archived: false });
 
+
+
+    //For the realtime orders fetching, the subscription are used 
     useInsertOrderSubscription();
 
     if (isLoading) {

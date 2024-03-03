@@ -10,6 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import { useProduct } from "@/api/products";
 import { ActivityIndicator } from "react-native";
+import RemoteImage from "@/components/RemoteImage";
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -67,8 +68,13 @@ const ProductDetailsScreen = () => {
                         </Link>
                     ),
                 }} />
-            <Stack.Screen options={{ title: product?.name + id }} />
-            <Image style={styles.image} source={{ uri: product?.image || defaultPizzaImage }} />
+            <Stack.Screen options={{ title: product?.name }} />
+            {/* <Image style={styles.image} source={{ uri: product?.image || defaultPizzaImage }} /> */}
+            <RemoteImage
+                path={product?.image}
+                fallback={defaultPizzaImage}
+                style={styles.image}
+            />
             <Text style={styles.title}>{product.name}</Text>
             <Text style={styles.price}>${product.price}</Text>
 

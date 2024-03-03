@@ -2,6 +2,7 @@
 // import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
 // import OrderItemListItem from '@/components/OrderItemListItem';
 import { useOrderDetails } from '@/api/orders';
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
 import OrderItemListItem from '@/components/OrderItemListItem';
 import OrderListItem from '@/components/OrderListItem';
 // import orders from '@assets/data/orders';
@@ -16,7 +17,8 @@ export default function OrderDetailsScreen() {
 
     const { data: order, isLoading, error } = useOrderDetails(id);
 
-    //   useUpdateOrderSubscription(id);
+    // Subscription for the realtime updates
+    useUpdateOrderSubscription(id);
 
     // console.log(order, "fdhjd")
 

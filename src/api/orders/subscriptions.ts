@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
+// Subscriptions are used for the realtime updates time stamp: 5:55
+
 export const useInsertOrderSubscription = () => {
     const queryClient = useQueryClient();
 

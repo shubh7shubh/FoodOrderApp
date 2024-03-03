@@ -8,6 +8,7 @@ import Button from "@components/Button"
 import { useCart } from "@/providers/CartProvider";
 import { useProduct } from "@/api/products";
 import { ActivityIndicator } from "react-native";
+import RemoteImage from "@/components/RemoteImage";
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -50,7 +51,12 @@ const ProductDetailsScreen = () => {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ title: product?.name + id }} />
-            <Image style={styles.image} source={{ uri: product?.image || defaultPizzaImage }} />
+            {/* <Image style={styles.image} source={{ uri: product?.image || defaultPizzaImage }} /> */}
+            <RemoteImage
+                path={product?.image}
+                fallback={defaultPizzaImage}
+                style={styles.image}
+            />
             <Text style={styles.price}>${product.price}</Text>
 
             <Text>Select size</Text>
